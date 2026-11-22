@@ -20,6 +20,11 @@ a{color:var(--accent)}
 .wrap{max-width:480px;margin:0 auto;background:#fff;min-height:100vh;padding-bottom:84px}
 h1,h2,.price{font-family:'Space Grotesk',sans-serif}
 .topbar{background:var(--ink);color:#fff;font-size:12px;font-weight:600;text-align:center;padding:8px 12px}
+.topbar.bf{background:var(--accent);letter-spacing:.06em}
+.old{font-size:18px;color:var(--muted);text-decoration:line-through}
+.save{white-space:nowrap;font-size:12px;font-weight:700;background:#15803D;color:#fff;border-radius:6px;padding:4px 8px}
+.mde{display:flex;gap:10px;align-items:center;background:var(--tint);border-radius:12px;padding:12px 14px;margin:14px 0 4px;font-size:14px;line-height:1.35}
+.mde b{color:var(--accent-dark)}
 header{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-bottom:1px solid var(--line)}
 header img{height:28px;width:auto}
 .pill{font-size:13px;font-weight:600;text-decoration:none;color:var(--ink);border:1px solid var(--ink);border-radius:999px;padding:8px 14px}
@@ -86,7 +91,8 @@ footer{padding:20px;font-size:12px;color:var(--muted);text-align:center}
 <script>
 /* ===== CONFIGURACIÓN ===== */
 var PIXEL_ID = '641069364871786';            // ID del píxel de Meta (PIXEL SHOPPING). Vacío = no carga el píxel.
-var PRECIO = 239900;
+var PRECIO = 219900;      // Precio Black Friday
+var PRECIO_ANTES = 239900; // Precio normal (tachado)
 var WHATSAPP = '573215231494'; // Número de WhatsApp de Shopping Gadgets (Botcake)
 var API = 'https://api.llantascamionmedellin.co/api/collections/pedidos_sg/records';
 /* ========================== */
@@ -100,7 +106,8 @@ if (PIXEL_ID) {
 </head>
 <body>
 <div class="wrap">
-  <div class="topbar">Envío gratis a toda Colombia · Contraentrega, Addi o Mercado Pago</div>
+  <div class="topbar bf">BLACK FRIDAY · Precio especial hasta el 30 de nov</div>
+  <div class="topbar">En Medellín te llega HOY · Pagas al recibir · Envío gratis</div>
   <header>
     <img src="img/logo-sg.png" alt="Shopping Gadgets">
     <a class="pill" href="#pedido">Pedir</a>
@@ -109,11 +116,13 @@ if (PIXEL_ID) {
   <section class="hero">
     <img src="img/hero-azul.jpg" alt="Carro a control remoto tipo F1 azul y rojo en su caja con el control">
     <div class="pad">
-      <div class="badges"><span class="badge hot">ESCALA 1:10</span><span class="badge">El regalo de esta Navidad</span></div>
+      <div class="badges"><span class="badge hot">BLACK FRIDAY</span><span class="badge">ESCALA 1:10</span><span class="badge">El regalo de esta Navidad</span></div>
       <h1>Carro de carreras tipo F1 a control remoto</h1>
       <p class="lead">Un carro de carreras grande, con diseño de pista profesional y sonido de motor. Pura adrenalina para los fanáticos de las carreras, y una pieza que luce de colección. 🏁</p>
-      <div class="price-row"><span class="price">$239.900</span><span style="font-size:14px;color:var(--muted)">envío incluido</span></div>
+      <div class="price-row"><span class="price" data-p>$219.900</span><span class="old" data-o>$239.900</span><span class="save">Ahorras $20.000</span></div>
+      <div style="font-size:14px;color:var(--muted);margin:-6px 0 14px">Envío incluido · o págalo a cuotas con Addi</div>
       <a class="btn" href="#pedido" data-cta>Lo quiero, pago al recibir</a>
+      <div class="mde"><span style="font-size:22px">🛵</span><span><b>¿Estás en Medellín o el Valle de Aburrá?</b> Pídelo antes de las 2 p.m. y te llega hoy mismo. Lo revisas y pagas al recibirlo.</span></div>
       <div class="trust">
         <div><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#141416" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg>Pagas cuando te llegue</div>
         <div><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#141416" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg>Envío gratis al país</div>
@@ -171,7 +180,7 @@ if (PIXEL_ID) {
           </div>
         </div>
         <label>Nombre completo<input type="text" name="nombre" autocomplete="name" placeholder="Ej: Juan Pérez" required></label>
-        <label>Celular (WhatsApp)<input type="tel" name="celular" autocomplete="tel" inputmode="numeric" placeholder="300 123 4567" required></label>
+        <label>Celular (WhatsApp)<input type="tel" name="celular" autocomplete="tel-national" inputmode="numeric" placeholder="300 123 4567" required></label>
         <div class="two">
           <label>Departamento<input type="text" name="departamento" placeholder="Antioquia" required></label>
           <label>Ciudad<input type="text" name="ciudad" placeholder="Medellín" required></label>
@@ -187,9 +196,9 @@ if (PIXEL_ID) {
           <span class="note">Si eliges Addi, Mercado Pago o transferencia, te enviamos el link o los datos por WhatsApp.</span>
         </fieldset>
         <div class="summary">
-          <div><span>Carro tipo F1 · <span id="sumModel">Azul y rojo</span></span><span>$239.900</span></div>
+          <div><span>Carro tipo F1 · <span id="sumModel">Azul y rojo</span></span><span data-p>$219.900</span></div>
           <div style="color:var(--muted)"><span>Envío</span><span style="color:#15803D;font-weight:600">Gratis</span></div>
-          <div class="total"><span>Total</span><span>$239.900</span></div>
+          <div class="total"><span>Total</span><span data-p>$219.900</span></div>
         </div>
         <p class="err" id="err">Revisa los campos marcados: faltan datos para despacharte.</p>
         <button type="submit" class="btn" id="sendBtn">Confirmar pedido</button>
@@ -217,7 +226,7 @@ if (PIXEL_ID) {
 </div>
 
 <div class="sticky" id="sticky"><div class="in">
-  <div><small>Pagas al recibir</small><span class="price">$239.900</span></div>
+  <div><small>Black Friday · pagas al recibir</small><span class="price" data-p>$219.900</span></div>
   <a class="btn" href="#pedido">Pedir ahora</a>
 </div></div>
 
@@ -240,6 +249,23 @@ if (PIXEL_ID) {
     started = true;
   });
 
+  // Formulario sin terminar: si deja nombre y celular y se va sin confirmar, avisa por Telegram
+  var sent = false, partialSent = false;
+  function partial(){
+    if (sent || partialSent) return;
+    var f = document.getElementById('orderForm');
+    var cel = (f.celular.value||'').replace(/\D/g,''); if (cel.length>10 && cel.indexOf('57')===0) cel = cel.slice(2);
+    if (cel.length !== 10 || !(f.nombre.value||'').trim()) return;
+    partialSent = true;
+    var pd = {producto:'Carro tipo F1', modelo:model, valor:PRECIO, nombre:f.nombre.value.trim(), celular:cel,
+      departamento:f.departamento.value.trim()||'-', ciudad:f.ciudad.value.trim()||'-', direccion:f.direccion.value.trim()||'-',
+      cedula:f.cedula.value.trim()||'-', pago:f.querySelector('input[name=pago]:checked').value,
+      origen:('parcial|'+location.search.slice(1)).substring(0,200)};
+    try { fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(pd),keepalive:true}); } catch(_){}
+  }
+  document.addEventListener('visibilitychange', function(){ if (document.visibilityState==='hidden') partial(); });
+  window.addEventListener('pagehide', partial);
+
   document.getElementById('orderForm').addEventListener('submit', function(e){
     e.preventDefault();
     var f = e.target, ok = true;
@@ -254,19 +280,20 @@ if (PIXEL_ID) {
 
     var d = {
       producto: 'Carro tipo F1', modelo: model, valor: PRECIO,
-      nombre: f.nombre.value.trim(), celular: f.celular.value.replace(/\D/g,''),
+      nombre: f.nombre.value.trim(), celular: (function(c){c=c.replace(/\D/g,'');if(c.length>10&&c.indexOf('57')===0)c=c.slice(2);return c.slice(-10);})(f.celular.value),
       departamento: f.departamento.value.trim(), ciudad: f.ciudad.value.trim(),
       direccion: f.direccion.value.trim(), cedula: f.cedula.value.trim(),
       pago: f.querySelector('input[name=pago]:checked').value,
       origen: location.search.slice(1).substring(0,200)
     };
+    sent = true;
     var btn = document.getElementById('sendBtn');
     btn.disabled = true; btn.textContent = 'Enviando...';
 
     var done = function(){
       if (window.fbq) { fbq('track','Purchase',{value:PRECIO,currency:'COP',content_name:'Carro tipo F1 - '+model}); }
       var msg = 'Hola, acabo de hacer un pedido en la página:%0A' +
-        '• Carro tipo F1 ' + encodeURIComponent(model) + ' – $239.900%0A' +
+        '• Carro tipo F1 ' + encodeURIComponent(model) + ' – $' + PRECIO.toLocaleString('es-CO') + '%0A' +
         '• Nombre: ' + encodeURIComponent(d.nombre) + '%0A' +
         '• Ciudad: ' + encodeURIComponent(d.ciudad + ', ' + d.departamento) + '%0A' +
         '• Dirección: ' + encodeURIComponent(d.direccion) + '%0A' +
